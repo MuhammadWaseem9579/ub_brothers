@@ -1,0 +1,18 @@
+<div class="container mt-5">
+  <h1>Create a New Party</h1>
+
+  <%= form_with(model: @party, local: true) do |form| %>
+    <div class="mb-3">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control", placeholder: "Enter party name" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :opening_balance, class: "form-label" %>
+      <% placeholder_value = @party.new_record? ? nil : "0.00" %>
+      <%= form.number_field :opening_balance, value: placeholder_value, class: "form-control", step: "0.01", placeholder: "Enter opening balance" %>
+    </div>
+
+    <%= form.submit "Create Party", class: "btn btn-primary" %>
+  <% end %>
+</div>
