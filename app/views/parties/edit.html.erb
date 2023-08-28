@@ -1,5 +1,5 @@
 <div class="container mt-5">
-<h1>Create a New Party</h1>
+<h1>Edit Party</h1>
 
 <%= form_with(model: @party, local: true) do |form| %>
   <div class="mb-3">
@@ -12,6 +12,6 @@
     <%= form.number_field :opening_balance, class: "form-control", step: "0.01", placeholder: "Enter opening balance" %>
   </div>
 
-  <%= form.submit "Create Party", class: "btn btn-primary" %>
+  <%= form.submit "Update Party", class: "btn btn-primary" %>
 <% end %>
 </div>

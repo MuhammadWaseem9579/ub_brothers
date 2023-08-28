@@ -1,0 +1,46 @@
+<div class="container mt-5 mb-5">
+  <h1>Create a New Ticket</h1>
+
+  <%= form_with(model: @ticket, url: party_tickets_path(params[:party_id]), local: true) do |form| %>
+    <div class="mb-3">
+      <%= form.label :invoice_no, class: "form-label" %>
+      <%= form.text_field :invoice_no, class: "form-control", placeholder: "Enter Invoice No.", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :ticket_no, class: "form-label" %>
+      <%= form.text_field :ticket_no, class: "form-control", placeholder: "Enter Ticket No.", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :sector, class: "form-label" %>
+      <%= form.text_field :sector, class: "form-control", placeholder: "Enter sector", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :fare, class: "form-label" %>
+      <% placeholder_value = @ticket.new_record? ? nil : "0.00" %>
+      <%= form.number_field :fare, value: placeholder_value, class: "form-control", step: "0.01", placeholder: "Enter Fare", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :taxes, class: "form-label" %>
+      <% placeholder_value = @ticket.new_record? ? nil : "0.00" %>
+      <%= form.number_field :taxes, value: placeholder_value, class: "form-control", step: "0.01", placeholder: "Enter taxes", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :sp, class: "form-label" %>
+      <% placeholder_value = @ticket.new_record? ? nil : "0.00" %>
+      <%= form.number_field :sp, value: placeholder_value, class: "form-control", step: "0.01", placeholder: "Enter SP", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :kb, class: "form-label" %>
+      <% placeholder_value = @ticket.new_record? ? nil : "0.00" %>
+      <%= form.number_field :kb, value: placeholder_value, class: "form-control", step: "0.01", placeholder: "Enter KB", required: true %>
+    </div>
+
+    <%= form.submit "Create Party", class: "btn btn-primary" %>
+  <% end %>
+</div>

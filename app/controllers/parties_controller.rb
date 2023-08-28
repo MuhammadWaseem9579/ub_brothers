@@ -40,7 +40,7 @@ class PartiesController < ApplicationController
   private
 
   def set_party
-    @party = Party.find(params[:id])
+    @party = current_user.parties.find(params[:id])
   end
 
   def party_params

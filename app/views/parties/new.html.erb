@@ -9,8 +9,7 @@
 
     <div class="mb-3">
       <%= form.label :opening_balance, class: "form-label" %>
-      <% placeholder_value = @party.new_record? ? nil : "0.00" %>
-      <%= form.number_field :opening_balance, value: placeholder_value, class: "form-control", step: "0.01", placeholder: "Enter opening balance" %>
+      <%= form.number_field :opening_balance, class: "form-control", step: "0.01", placeholder: "Enter opening balance" %>
     </div>
 
     <%= form.submit "Create Party", class: "btn btn-primary" %>

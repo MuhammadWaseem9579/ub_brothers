@@ -76,3 +76,5 @@ gem "devise", "~> 4.9"
 gem "bootstrap"
 gem "sassc-rails"
 gem 'semantic-ui-sass'
+gem 'font-awesome-sass'
+gem 'acts_as_paranoid'

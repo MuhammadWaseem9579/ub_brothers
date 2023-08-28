@@ -1,0 +1,67 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Tickets</h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">All Tickets</h6>
+      <%= link_to 'Add new Ticket', new_party_ticket_path(params[:party_id]), class: 'btn btn-primary' %>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Invoice No.</th>
+              <th>Ticket No.</th>
+              <th>Sector</th>
+              <th>Fare</th>
+              <th>Taxes</th>
+              <th>SP</th>
+              <th>KB</th>
+              <th>NET</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Invoice No.</th>
+              <th>Ticket No.</th>
+              <th>Sector</th>
+              <th>Fare</th>
+              <th>Taxes</th>
+              <th>SP</th>
+              <th>KB</th>
+              <th>NET</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            <% @tickets.each do |t| %>
+              <tr>
+                <td><%= t.invoice_no %></td>
+                <td><%= t.ticket_no %></td>
+                <td><%= t.sector %></td>
+                <td><%= t.fare %></td>
+                <td><%= t.taxes %></td>
+                <td><%= t.sp %></td>
+                <td><%= t.kb %></td>
+                <td><%= t.net_total %></td>
+                <td class="text-end">
+                  <%= link_to 'view', party_ticket_path(t.party_id, t.id), class: 'btn btn-primary' %>
+                  <%= link_to 'edit', edit_party_ticket_path(t.party_id, t.id), class: 'btn btn-secondary' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /.container-fluid -->

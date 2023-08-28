@@ -9,5 +9,6 @@ import './sb-admin-2.min.js';
 import './Chart.min.js';
 import './chart-area-demo.js';
 import './chart-pie-demo.js';
-import './dataTables.bootstrap4.min.js';
 import './jquery.dataTables.min.js';
+import './dataTables.bootstrap4.min.js';
+import './datatables-demo.js';

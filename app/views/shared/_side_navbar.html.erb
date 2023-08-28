@@ -32,14 +32,14 @@
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
       aria-expanded="true" aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-cog"></i>
+      <i class="fa-solid fa-handshake"></i>
       <span>Parties</span>
     </a>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">Party</h6>
+        <%= link_to 'All parties', parties_path, class: 'collapse-item' %>
         <%= link_to 'Add new party', new_party_path, class: 'collapse-item' %>
-        <%= link_to 'List all parties', parties_path, class: 'collapse-item' %>
       </div>
     </div>
   </li>
