@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDeletedAtToParanoiac < ActiveRecord::Migration[7.0]
   def change
     add_column :users, :deleted_at, :datetime

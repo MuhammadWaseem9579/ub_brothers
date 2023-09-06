@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PaymentsController < ApplicationController
   def new
     @payment = Payment.new
@@ -8,7 +10,7 @@ class PaymentsController < ApplicationController
     @payment.user = current_user
 
     if @payment.save
-      flash[:success] = "Payment created successfully."
+      flash[:success] = 'Payment created successfully.'
       redirect_to party_tickets_path(params[:party_id])
     else
       flash[:danger] = @payment.errors.full_messages.join(', ')
@@ -24,7 +26,7 @@ class PaymentsController < ApplicationController
     @payment = current_user.parties.find(params[:party_id]).payments.find(params[:id])
 
     if @payment.update(payment_params)
-      flash[:success] = "Payment updated successfully."
+      flash[:success] = 'Payment updated successfully.'
       redirect_to party_tickets_path(params[:party_id])
     else
       flash[:danger] = @payment.errors.full_messages.join(', ')

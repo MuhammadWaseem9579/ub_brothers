@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Party < ActiveRecord::Base
   acts_as_paranoid
-  
+
   belongs_to :user
   has_many :tickets, dependent: :destroy
   has_many :payments, dependent: :destroy
@@ -12,7 +14,7 @@ class Party < ActiveRecord::Base
   end
 
   def tickets_taxes_total
-    tickets_taxes_total ||= tickets.sum(:taxes).to_f
+    tickets_taxes_total || tickets.sum(:taxes).to_f
   end
 
   def tickets_sp_total
@@ -24,7 +26,7 @@ class Party < ActiveRecord::Base
   end
 
   def tickets_net_total
-    @tickets_net_total ||= tickets.sum("fare + taxes + sp + kb").to_f
+    @tickets_net_total ||= tickets.sum('fare + taxes + sp + kb').to_f
   end
 
   def payments_debit_total
@@ -40,6 +42,8 @@ class Party < ActiveRecord::Base
   end
 
   def net_balance
-    @net_balance ||= (opening_balance + tickets_net_total - refunded_tickets_total - payments_credit_total + payments_debit_total)
+    @net_balance ||= opening_balance + (
+        tickets_net_total - refunded_tickets_total - payments_credit_total
+      ) + payments_debit_total
   end
 end

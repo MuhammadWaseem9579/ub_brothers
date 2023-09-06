@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class TicketsController < ApplicationController
-  before_action :set_party_and_ticket, only: [:index, :new, :create, :edit, :update, :show]
+  before_action :set_party_and_ticket, only: %i[index new create edit update show]
 
   def index
     @tickets = @party.tickets.order(ticket_date: :desc)
@@ -15,7 +17,7 @@ class TicketsController < ApplicationController
     @ticket.user = current_user
 
     if @ticket.save
-      flash[:success] = "Ticket created successfully."
+      flash[:success] = 'Ticket created successfully.'
       redirect_to party_tickets_path(@party.id)
     else
       flash[:danger] = @ticket.errors.full_messages.join(', ')
@@ -23,12 +25,11 @@ class TicketsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @ticket.update(ticket_params)
-      flash[:success] = "Ticket updated successfully."
+      flash[:success] = 'Ticket updated successfully.'
       redirect_to party_tickets_path(@party.id)
     else
       flash[:danger] = @ticket.errors.full_messages.join(', ')
@@ -36,8 +37,7 @@ class TicketsController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   private
 

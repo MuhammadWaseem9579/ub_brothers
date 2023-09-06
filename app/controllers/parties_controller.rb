@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class PartiesController < ApplicationController
-  before_action :set_party, only: [:edit, :update, :show]
-  
+  before_action :set_party, only: %i[edit update show]
+
   def index
     @parties = current_user.parties
   end
@@ -13,7 +15,7 @@ class PartiesController < ApplicationController
     @party = current_user.parties.build(party_params)
 
     if @party.save
-      flash[:success] = "Party created successfully."
+      flash[:success] = 'Party created successfully.'
       redirect_to parties_path
     else
       flash[:danger] = @party.errors.full_messages.join(', ')
@@ -21,12 +23,11 @@ class PartiesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @party.update(party_params)
-      flash[:success] = "Party updated successfully."
+      flash[:success] = 'Party updated successfully.'
       redirect_to parties_path
     else
       flash[:danger] = @party.errors.full_messages.join(', ')
@@ -34,8 +35,7 @@ class PartiesController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
   private
 

@@ -1,0 +1,21 @@
+# .rubocop.yml
+
+# Exclude specific files
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+    - 'tmp/**/*'
+
+# Excluding specific cops for a directory
+Style/Documentation:
+  Exclude:
+    - 'app/**/*'
+    - 'db/**/*'
+    - 'test/**/*'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/**/*'
+    - 'test/**/*'
