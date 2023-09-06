@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :parties, dependent: :destroy
   has_many :tickets, dependent: :destroy
+  has_many :payments, dependent: :destroy
 
   def full_name
     return 'Test User' if first_name.blank? && last_name.blank?

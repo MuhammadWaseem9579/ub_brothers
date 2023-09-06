@@ -8,6 +8,7 @@ class CreateTickets < ActiveRecord::Migration[7.0]
       t.decimal :taxes, precision: 12, scale: 2, default: 0, null: false
       t.decimal :sp, precision: 12, scale: 2, default: 0, null: false
       t.decimal :kb, precision: 12, scale: 2, default: 0, null: false
+      t.date :ticket_date, null: false
       t.references :user, foreign_key: true
       t.references :party, foreign_key: true
 

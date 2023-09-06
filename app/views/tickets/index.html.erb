@@ -1,10 +1,10 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-  <!-- Page Heading -->
+  <!-- Heading -->
   <h1 class="h3 mb-2 text-gray-800">Tickets</h1>
 
-  <!-- DataTales Example -->
+  <!-- DataTales -->
   <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
       <h6 class="m-0 font-weight-bold text-primary">All Tickets</h6>
@@ -13,9 +13,10 @@
 
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered" width="100%" cellspacing="0">
           <thead>
             <tr>
+              <th>Date</th>
               <th>Invoice No.</th>
               <th>Ticket No.</th>
               <th>Sector</th>
@@ -27,22 +28,10 @@
               <th class="text-end">Actions</th>
             </tr>
           </thead>
-          <tfoot>
-            <tr>
-              <th>Invoice No.</th>
-              <th>Ticket No.</th>
-              <th>Sector</th>
-              <th>Fare</th>
-              <th>Taxes</th>
-              <th>SP</th>
-              <th>KB</th>
-              <th>NET</th>
-              <th class="text-end">Actions</th>
-            </tr>
-          </tfoot>
           <tbody>
             <% @tickets.each do |t| %>
               <tr>
+                <td><%= t.ticket_date %></td>
                 <td><%= t.invoice_no %></td>
                 <td><%= t.ticket_no %></td>
                 <td><%= t.sector %></td>
@@ -52,11 +41,125 @@
                 <td><%= t.kb %></td>
                 <td><%= t.net_total %></td>
                 <td class="text-end">
-                  <%= link_to 'view', party_ticket_path(t.party_id, t.id), class: 'btn btn-primary' %>
                   <%= link_to 'edit', edit_party_ticket_path(t.party_id, t.id), class: 'btn btn-secondary' %>
                 </td>
               </tr>
             <% end %>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="font-weight-bold">Total</td>
+              <td class="font-weight-bold"><%= @party.tickets_fare_total %></td>
+              <td class="font-weight-bold"><%= @party.tickets_taxes_total %></td>
+              <td class="font-weight-bold"><%= @party.tickets_sp_total %></td>
+              <td class="font-weight-bold"><%= @party.tickets_kb_total %></td>
+              <td class="font-weight-bold"><%= @party.tickets_net_total %></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Payments</h1>
+
+  <!-- DataTales -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">All Payments</h6>
+      <%= link_to 'Add new Payment', new_party_payment_path(params[:party_id]), class: 'btn btn-primary' %>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Payment Date</th>
+              <th>Voucher No.</th>
+              <th>Reference</th>
+              <th>Description</th>
+              <th>Cheque No.</th>
+              <th>Debit</th>
+              <th>Credit</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @payments.each do |p| %>
+              <tr>
+                <td><%= p.payment_date %></td>
+                <td><%= p.voucher_no %></td>
+                <td><%= p.reference %></td>
+                <td><%= p.description %></td>
+                <td><%= p.cheque_no %></td>
+                <td><%= p.debit %></td>
+                <td><%= p.credit %></td>
+                <td class="text-end">
+                  <%= link_to 'edit', edit_party_payment_path(p.party_id, p.id), class: 'btn btn-secondary' %>
+                </td>
+              </tr>
+            <% end %>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="font-weight-bold">Total</td>
+              <td class="font-weight-bold"><%= @party.payments_debit_total %></td>
+              <td class="font-weight-bold"><%= @party.payments_credit_total %></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5"></div>
+  <!-- DataTales -->
+  <div class="card shadow mb-4" style="width:50%; margin: auto;">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Details</h6>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" width="100%" cellspacing="0">
+          <tbody>
+            <tr>
+              <td>Opening Balance B/F</td>
+              <td class="text-end"><%= @party.opening_balance %></td>
+            </tr>
+
+            <tr>
+              <td>Add Sale Invoices</td>
+              <td class="text-end"><%= @party.tickets_net_total %></td>
+            </tr>
+
+            <tr>
+              <td>Less Refund Invoices</td>
+              <td class="text-end"><%= @party.refunded_tickets_total %> | pending ???????</td>
+            </tr>
+
+            <tr>
+              <td>Less Receipts</td>
+              <td class="text-end"><%= @party.payments_credit_total %></td>
+            </tr>
+
+            <tr>
+              <td>Add Payments</td>
+              <td class="text-end"><%= @party.payments_debit_total %></td>
+            </tr>
+
+            <tr>
+              <td class="font-weight-bold">Net Balance</td>
+              <td class="text-end font-weight-bold"><%= @party.net_balance %></td>
+            </tr>
           </tbody>
         </table>
       </div>

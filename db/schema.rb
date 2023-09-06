@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_26_225148) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_28_124244) do
   create_table "parties", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.decimal "opening_balance", precision: 12, scale: 2, default: "0.0", null: false
@@ -22,6 +22,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_225148) do
     t.index ["user_id"], name: "index_parties_on_user_id"
   end
 
+  create_table "payments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "voucher_no", null: false
+    t.string "reference"
+    t.text "description", null: false
+    t.string "cheque_no"
+    t.decimal "debit", precision: 12, scale: 2, default: "0.0", null: false
+    t.decimal "credit", precision: 12, scale: 2, default: "0.0", null: false
+    t.date "payment_date", null: false
+    t.datetime "deleted_at"
+    t.bigint "user_id"
+    t.bigint "party_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["party_id"], name: "index_payments_on_party_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
   create_table "tickets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "invoice_no", null: false
     t.string "ticket_no", null: false
@@ -30,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_225148) do
     t.decimal "taxes", precision: 12, scale: 2, default: "0.0", null: false
     t.decimal "sp", precision: 12, scale: 2, default: "0.0", null: false
     t.decimal "kb", precision: 12, scale: 2, default: "0.0", null: false
+    t.date "ticket_date", null: false
     t.bigint "user_id"
     t.bigint "party_id"
     t.datetime "created_at", null: false
@@ -57,6 +75,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_225148) do
   end
 
   add_foreign_key "parties", "users"
+  add_foreign_key "payments", "parties"
+  add_foreign_key "payments", "users"
   add_foreign_key "tickets", "parties"
   add_foreign_key "tickets", "users"
 end

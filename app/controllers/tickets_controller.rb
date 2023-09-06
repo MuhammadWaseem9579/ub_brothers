@@ -1,19 +1,22 @@
 class TicketsController < ApplicationController
+  before_action :set_party_and_ticket, only: [:index, :new, :create, :edit, :update, :show]
+
   def index
-    @tickets = current_user.parties.find(params[:party_id]).tickets
+    @tickets = @party.tickets.order(ticket_date: :desc)
+    @payments = @party.payments.order(payment_date: :desc)
   end
 
   def new
-    @ticket = Ticket.new
+    @ticket = @party.tickets.build
   end
 
   def create
-    @ticket = current_user.parties.find(params[:party_id]).tickets.build(ticket_params)
+    @ticket = @party.tickets.build(ticket_params)
     @ticket.user = current_user
 
     if @ticket.save
       flash[:success] = "Ticket created successfully."
-      redirect_to party_tickets_path
+      redirect_to party_tickets_path(@party.id)
     else
       flash[:danger] = @ticket.errors.full_messages.join(', ')
       render :new
@@ -21,15 +24,12 @@ class TicketsController < ApplicationController
   end
 
   def edit
-    @ticket = current_user.parties.find(params[:party_id]).tickets.find(params[:id])
   end
 
   def update
-    @ticket = current_user.parties.find(params[:party_id]).tickets.find(params[:id])
-
     if @ticket.update(ticket_params)
       flash[:success] = "Ticket updated successfully."
-      redirect_to party_tickets_path
+      redirect_to party_tickets_path(@party.id)
     else
       flash[:danger] = @ticket.errors.full_messages.join(', ')
       render :edit
@@ -37,13 +37,18 @@ class TicketsController < ApplicationController
   end
 
   def show
-    @ticket = current_user.parties.find(params[:party_id]).tickets.find(params[:id])
   end
 
   private
 
+  def set_party_and_ticket
+    @party = current_user.parties.find(params[:party_id])
+    @ticket = @party.tickets.find(params[:id]) if params[:id]
+  end
+
   def ticket_params
     params.require(:ticket).permit(
+      :ticket_date,
       :invoice_no,
       :ticket_no,
       :sector,

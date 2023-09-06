@@ -1,0 +1,42 @@
+<div class="container mt-5 mb-5">
+  <h1>Edit Payment</h1>
+
+  <%= form_with(model: @payment, url: party_payment_path(params[:party_id]), local: true) do |form| %>
+    <div class="mb-3">
+      <%= form.label :payment_date, 'Date', class: "form-label" %>
+      <%= form.date_field :payment_date, as: :date, value: (form.object.payment_date.presence || Date.today).strftime("%m/%d/%Y"), class: 'form-control' %> 
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :voucher_no, class: "form-label" %>
+      <%= form.text_field :voucher_no, class: "form-control", placeholder: "Enter Voucher No.", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :reference, class: "form-label" %>
+      <%= form.text_field :reference, class: "form-control", placeholder: "Enter reference" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :description, class: "form-label" %>
+      <%= form.text_field :description, class: "form-control", placeholder: "Enter description", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :cheque_no, class: "form-label" %>
+      <%= form.text_field :cheque_no, class: "form-control", placeholder: "Enter description" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :debit, class: "form-label" %>
+      <%= form.number_field :debit, class: "form-control", step: "0.01", placeholder: "Enter debit", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :credit, class: "form-label" %>
+      <%= form.number_field :credit, class: "form-control", step: "0.01", placeholder: "Enter credit", required: true %>
+    </div>
+
+    <%= form.submit "Update Payment", class: "btn btn-primary" %>
+  <% end %>
+</div>
