@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
   <!-- Heading -->
-  <h1 class="h3 mb-2 text-gray-800">Tickets</h1>
+  <h1 class="h3 mb-2 text-gray-800"><%= @party.name.capitalize %></h1>
 
   <!-- DataTales -->
   <div class="card shadow mb-4">
@@ -41,7 +41,9 @@
                 <td><%= t.kb %></td>
                 <td><%= t.net_total %></td>
                 <td class="text-end">
-                  <%= link_to 'edit', edit_party_ticket_path(t.party_id, t.id), class: 'btn btn-secondary' %>
+                  <%= link_to('Refund', party_ticket_refund_path(t.party_id, t.id), data: { "turbo-method": :post, confirm: 'Are you sure you want to refund this ticket?' }, class: 'btn btn-warning') unless t.refunded? %>
+                  <%= link_to 'Edit', edit_party_ticket_path(t.party_id, t.id), class: 'btn btn-secondary' %>
+                  <%= link_to 'Delete', party_ticket_path(t.party_id, t.id), data: { "turbo-method": :delete, confirm: 'Are you sure you want to delete this ticket?' }, class: 'btn btn-danger' %>
                 </td>
               </tr>
             <% end %>
@@ -62,10 +64,6 @@
       </div>
     </div>
   </div>
-
-
-  <!-- Heading -->
-  <h1 class="h3 mb-2 text-gray-800">Payments</h1>
 
   <!-- DataTales -->
   <div class="card shadow mb-4">
@@ -101,6 +99,7 @@
                 <td><%= p.credit %></td>
                 <td class="text-end">
                   <%= link_to 'edit', edit_party_payment_path(p.party_id, p.id), class: 'btn btn-secondary' %>
+                  <%= link_to 'Delete', party_payment_path(p.party_id, p.id), data: { "turbo-method": :delete, confirm: 'Are you sure you want to delete this payment?' }, class: 'btn btn-danger' %>
                 </td>
               </tr>
             <% end %>
@@ -143,7 +142,7 @@
 
             <tr>
               <td>Less Refund Invoices</td>
-              <td class="text-end"><%= @party.refunded_tickets_total %> | pending ???????</td>
+              <td class="text-end"><%= @party.refunded_tickets_total %></td>
             </tr>
 
             <tr>

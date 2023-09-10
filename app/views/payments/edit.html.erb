@@ -4,7 +4,7 @@
   <%= form_with(model: @payment, url: party_payment_path(params[:party_id]), local: true) do |form| %>
     <div class="mb-3">
       <%= form.label :payment_date, 'Date', class: "form-label" %>
-      <%= form.date_field :payment_date, as: :date, value: (form.object.payment_date.presence || Date.today).strftime("%m/%d/%Y"), class: 'form-control' %> 
+      <%= form.date_field :payment_date, as: :date, value: form.object.payment_date, class: 'form-control' %> 
     </div>
 
     <div class="mb-3">

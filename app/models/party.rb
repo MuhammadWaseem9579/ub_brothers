@@ -14,7 +14,7 @@ class Party < ActiveRecord::Base
   end
 
   def tickets_taxes_total
-    tickets_taxes_total || tickets.sum(:taxes).to_f
+    @tickets_taxes_total ||= tickets.sum(:taxes).to_f
   end
 
   def tickets_sp_total
@@ -29,16 +29,16 @@ class Party < ActiveRecord::Base
     @tickets_net_total ||= tickets.sum('fare + taxes + sp + kb').to_f
   end
 
+  def refunded_tickets_total
+    @refunded_tickets_total ||= tickets.refunded.sum('fare + taxes + sp + kb').to_f
+  end
+
   def payments_debit_total
     @payments_debit_total ||= payments.sum(:debit).to_f
   end
 
   def payments_credit_total
     @payments_credit_total ||= payments.sum(:credit).to_f
-  end
-
-  def refunded_tickets_total
-    @refunded_tickets_total ||= 0
   end
 
   def net_balance

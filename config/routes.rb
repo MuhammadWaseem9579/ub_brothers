@@ -12,7 +12,10 @@ Rails.application.routes.draw do
   root 'dashboards#dashboard'
 
   resources :parties do
-    resources :tickets
+    resources :tickets do
+      post '/refund', to: 'tickets#refund'
+    end
+
     resources :payments
   end
 end

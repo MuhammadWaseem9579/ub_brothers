@@ -34,6 +34,18 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def destroy
+    @payment = current_user.parties.find(params[:party_id]).payments.find(params[:id])
+
+    if @payment.destroy
+      flash[:success] = 'Payment deleted successfully.'
+      redirect_to party_tickets_path(params[:party_id])
+    else
+      flash[:danger] = @payment.errors.full_messages.join(', ')
+      render :edit
+    end
+  end
+
   private
 
   def payment_params

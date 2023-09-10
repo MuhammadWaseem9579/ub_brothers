@@ -12,3 +12,15 @@ import './chart-pie-demo.js';
 import './jquery.dataTables.min.js';
 import './dataTables.bootstrap4.min.js';
 import './datatables-demo.js';
+
+
+$(document).ready(function() {
+  $('a[data-confirm]').on('click', function(e) {
+    var confirmationMessage = $(this).data('confirm');
+    
+    // Display the confirmation dialog with the specified message
+    if (!confirm(confirmationMessage)) {
+      e.preventDefault(); // Cancel the click event if the user does not confirm
+    }
+  });
+});

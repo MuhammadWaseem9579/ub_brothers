@@ -7,6 +7,8 @@ class Ticket < ActiveRecord::Base
   belongs_to :party
 
   validates :invoice_no,
+            :name,
+            :passport_no,
             :ticket_no,
             :sector,
             :fare,
@@ -14,6 +16,8 @@ class Ticket < ActiveRecord::Base
             :sp,
             :kb,
             presence: true, allow_blank: false
+
+  scope :refunded, -> { where(refunded: true) }
 
   def net_total
     [fare + taxes + sp + kb].compact.sum

@@ -8,6 +8,16 @@
     </div>
 
     <div class="mb-3">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control", placeholder: "Enter name of ticket holder", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :passport_no, class: "form-label" %>
+      <%= form.text_field :passport_no, class: "form-control", placeholder: "Enter Passport No. of ticket holder", required: true %>
+    </div>
+
+    <div class="mb-3">
       <%= form.label :invoice_no, class: "form-label" %>
       <%= form.text_field :invoice_no, class: "form-control", placeholder: "Enter Invoice No.", required: true %>
     </div>

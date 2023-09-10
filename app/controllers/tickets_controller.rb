@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class TicketsController < ApplicationController
-  before_action :set_party_and_ticket, only: %i[index new create edit update show]
+  before_action :set_party_and_ticket, only: %i[index new create edit update show refund destroy]
 
   def index
-    @tickets = @party.tickets.order(ticket_date: :desc)
-    @payments = @party.payments.order(payment_date: :desc)
+    @tickets = @party.tickets.order(created_at: :desc)
+    @payments = @party.payments.order(created_at: :desc)
   end
 
   def new
@@ -39,16 +39,38 @@ class TicketsController < ApplicationController
 
   def show; end
 
+  def refund
+    if @ticket.update(refunded: true)
+      flash[:success] = 'Ticket refunded successfully.'
+    else
+      flash[:error] = "Failed to refund the ticket. Errors: #{@ticket.errors.full_messages}"
+    end
+
+    redirect_to party_tickets_path(@party)
+  end
+
+  def destroy
+    if @ticket.destroy
+      flash[:success] = 'Ticket deleted successfully.'
+    else
+      flash[:error] = "Failed to delete the ticket. Errors: #{@ticket.errors.full_messages}"
+    end
+
+    redirect_to party_tickets_path(@party)
+  end
+
   private
 
   def set_party_and_ticket
     @party = current_user.parties.find(params[:party_id])
-    @ticket = @party.tickets.find(params[:id]) if params[:id]
+    @ticket = @party.tickets.find(params[:id].presence || params[:ticket_id]) if params[:id].present? || params[:ticket_id].present?
   end
 
   def ticket_params
     params.require(:ticket).permit(
       :ticket_date,
+      :name,
+      :passport_no,
       :invoice_no,
       :ticket_no,
       :sector,
