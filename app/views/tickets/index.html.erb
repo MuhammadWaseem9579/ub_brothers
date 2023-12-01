@@ -31,7 +31,7 @@
           <tbody>
             <% @tickets.each do |t| %>
               <tr>
-                <td><%= t.ticket_date %></td>
+                <td><%= format_date(t.ticket_date) %></td>
                 <td><%= t.invoice_no %></td>
                 <td><%= t.ticket_no %></td>
                 <td><%= t.sector %></td>
@@ -90,7 +90,7 @@
           <tbody>
             <% @payments.each do |p| %>
               <tr>
-                <td><%= p.payment_date %></td>
+                <td><%= format_date(p.payment_date) %></td>
                 <td><%= p.voucher_no %></td>
                 <td><%= p.reference %></td>
                 <td><%= p.description %></td>
@@ -98,7 +98,7 @@
                 <td><%= p.debit %></td>
                 <td><%= p.credit %></td>
                 <td class="text-end">
-                  <%= link_to 'edit', edit_party_payment_path(p.party_id, p.id), class: 'btn btn-secondary' %>
+                  <%= link_to 'Edit', edit_party_payment_path(p.party_id, p.id), class: 'btn btn-secondary' %>
                   <%= link_to 'Delete', party_payment_path(p.party_id, p.id), data: { "turbo-method": :delete, confirm: 'Are you sure you want to delete this payment?' }, class: 'btn btn-danger' %>
                 </td>
               </tr>

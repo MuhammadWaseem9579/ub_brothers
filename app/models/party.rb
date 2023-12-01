@@ -6,6 +6,7 @@ class Party < ActiveRecord::Base
   belongs_to :user
   has_many :tickets, dependent: :destroy
   has_many :payments, dependent: :destroy
+  has_many :hajj_and_umrahs, dependent: :destroy
 
   validates :name, presence: true, allow_blank: false
 

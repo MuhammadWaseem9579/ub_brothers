@@ -17,5 +17,6 @@ Rails.application.routes.draw do
     end
 
     resources :payments
+    resources :hajj_and_umrahs
   end
 end

@@ -39,11 +39,11 @@ class PaymentsController < ApplicationController
 
     if @payment.destroy
       flash[:success] = 'Payment deleted successfully.'
-      redirect_to party_tickets_path(params[:party_id])
     else
       flash[:danger] = @payment.errors.full_messages.join(', ')
-      render :edit
     end
+
+    redirect_to party_tickets_path(params[:party_id])
   end
 
   private

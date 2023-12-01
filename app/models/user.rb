@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   has_many :parties, dependent: :destroy
   has_many :tickets, dependent: :destroy
+  has_many :hajj_and_umrahs, dependent: :destroy
   has_many :payments, dependent: :destroy
 
   def full_name

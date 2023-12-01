@@ -1,0 +1,40 @@
+<div class="container mt-5 mb-5">
+  <h1>Create a New Hajj and Umrah entry</h1>
+
+  <%= form_with(model: @hajj_and_umrah, url: party_hajj_and_umrahs_path(params[:party_id]), local: true) do |f| %>
+    <div class="mb-3">
+      <%= f.label :entry_date, 'Date', class: "form-label" %>
+      <%= f.date_field :entry_date, as: :date, value: f.object.entry_date.presence || Date.today, class: 'form-control', required: true %> 
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :description, class: "form-label" %>
+      <%= f.text_area :description, class: "form-control", placeholder: "Enter description", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :voucher_no, class: "form-label" %>
+      <%= f.text_field :voucher_no, class: "form-control", placeholder: "Enter Voucher No.", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :visa_rate, class: "form-label" %>
+      <% placeholder_value = @hajj_and_umrah.new_record? ? nil : "0.00" %>
+      <%= f.number_field :visa_rate, value: placeholder_value, class: "form-control", step: "0.01", placeholder: "Enter Visa Rate", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :makkah_hotel_amount, class: "form-label" %>
+      <% placeholder_value = @hajj_and_umrah.new_record? ? nil : "0.00" %>
+      <%= f.number_field :makkah_hotel_amount, value: placeholder_value, class: "form-control", step: "0.01", placeholder: "Enter Makkah Hotel Amount", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :madina_hotel_amount, class: "form-label" %>
+      <% placeholder_value = @hajj_and_umrah.new_record? ? nil : "0.00" %>
+      <%= f.number_field :madina_hotel_amount, value: placeholder_value, class: "form-control", step: "0.01", placeholder: "Enter Madina Hotel Amount", required: true %>
+    </div>
+
+    <%= f.submit "Create Party", class: "btn btn-primary" %>
+  <% end %>
+</div>
