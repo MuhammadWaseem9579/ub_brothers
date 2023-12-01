@@ -18,5 +18,6 @@ Rails.application.routes.draw do
 
     resources :payments
     resources :hajj_and_umrahs
+    get '/tickets_pdf', to: 'tickets#tickets_pdf'
   end
 end

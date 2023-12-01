@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class TicketsController < ApplicationController
-  before_action :set_party_and_ticket, only: %i[index new create edit update show refund destroy]
+  include ApplicationHelper
+
+  before_action :set_party_and_ticket, only: %i[index new create edit update show refund destroy tickets_pdf]
 
   def index
     @tickets = @party.tickets.order(created_at: :desc)
@@ -47,6 +49,114 @@ class TicketsController < ApplicationController
     end
 
     redirect_to party_tickets_path(@party)
+  end
+
+  def tickets_pdf
+    logo_path = "#{Rails.root}/app/assets/images/ub_brothers_logo.png"
+
+    pdf = Prawn::Document.new
+
+    # Logo
+    pdf.image logo_path, position: :center, width: 75
+
+    # Heading
+    pdf.move_down 20
+    pdf.text @party.name, size: 16, style: :bold, align: :center
+
+    pdf.move_down 20
+    pdf.text 'All Tickets', size: 14, style: :bold
+    tickets_data = [['Date', 'Invoice No.', 'Ticket No.', 'Sector', 'Fare', 'Taxes', 'SP', 'KB', 'NET']]
+
+    @party.tickets.order(created_at: :desc).each do |t|
+      tickets_data << [
+        format_date(t.ticket_date),
+        t.invoice_no,
+        t.ticket_no,
+        t.sector,
+        t.fare,
+        t.taxes,
+        t.sp,
+        t.kb,
+        t.net_total
+      ]
+    end
+
+    tickets_data << [
+      '',
+      '',
+      '',
+      'Total',
+      @party.tickets_fare_total,
+      @party.tickets_taxes_total,
+      @party.tickets_sp_total,
+      @party.tickets_kb_total,
+      @party.tickets_net_total
+    ]
+
+    pdf.table(tickets_data) do
+      row(0).font_style = :bold
+      columns(1..6).align = :center
+      self.row_colors = ['DDDDDD', 'FFFFFF']
+      self.header = true
+      row(-1).font_style = :bold
+    end
+
+    pdf.move_down 20
+    pdf.text 'All payments', size: 14, style: :bold
+    payments_data = [['Payment Date', 'Voucher No.', 'Reference', 'Description', 'Cheque No.', 'Debit', 'Credit']]
+
+    @party.payments.order(created_at: :desc).each do |t|
+      payments_data << [
+        format_date(t.payment_date),
+        t.voucher_no,
+        t.reference,
+        t.description,
+        t.cheque_no,
+        t.debit,
+        t.credit
+      ]
+    end
+
+    payments_data << [
+      '',
+      '',
+      '',
+      '',
+      'Total',
+      @party.payments_debit_total,
+      @party.payments_credit_total
+    ]
+
+    pdf.table(payments_data) do
+      row(0).font_style = :bold
+      columns(1..6).align = :center
+      self.row_colors = ['DDDDDD', 'FFFFFF']
+      self.header = true
+      row(-1).font_style = :bold
+    end
+
+    pdf.move_down 20
+    pdf.text 'Details', size: 14, style: :bold
+    payments_data = [
+      ['Opening Balance B/F', @party.opening_balance],
+      ['Add Sale Invoices', @party.tickets_net_total],
+      ['Less Refund Invoices', @party.refunded_tickets_total],
+      ['Less Receipts  ', @party.payments_credit_total],
+      ['Cheque No.', @party.payments_debit_total],
+      ['Net Balance', @party.net_balance]
+    ]
+
+    pdf.table(payments_data) do
+      columns(1..6).align = :center
+      self.row_colors = ['DDDDDD', 'FFFFFF']
+      self.header = true
+      row(-1).font_style = :bold
+    end
+
+    send_data pdf.render, 
+          filename: "#{@party.name}_#{Date.today}.pdf", 
+          type: 'application/pdf',
+          disposition: 'inline'
   end
 
   def destroy

@@ -2,7 +2,10 @@
 <div class="container-fluid">
 
   <!-- Heading -->
-  <h1 class="h3 mb-2 text-gray-800"><%= @party.name.capitalize %></h1>
+  <div class="d-flex align-items-center justify-content-between">
+    <h1 class="h3 mb-2 text-gray-800"><%= @party.name.capitalize %></h1>
+    <%= link_to "<i class=\"fas fa-download fa-sm text-white-50\"></i>Generate Report".html_safe, party_tickets_pdf_path(@party), class: 'd-none d-sm-inline-block btn btn-sm btn-primary shadow-sm' %>
+  </div>
 
   <!-- DataTales -->
   <div class="card shadow mb-4">
